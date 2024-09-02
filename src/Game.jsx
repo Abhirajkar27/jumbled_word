@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { GameContext } from "./context";
+import WordDisplay from "./WordDisplay";
 
 const Game = () => {
   const { level, words, guesses, setGuesses, checkWord, isGameComplete } =
@@ -101,9 +102,6 @@ const Game = () => {
       <h2>Level {level}</h2>
       {guesses.map((currentGuess, wordIndex) => (
         <div key={wordIndex} style={{ marginBottom: "20px" }}>
-          <div>
-            <strong>Letters Used:</strong> {jumbledWords[wordIndex]}
-          </div>
           <div style={{ marginTop: "10px" }}>
             {currentGuess.map((letter, letterIndex) => (
               <input
@@ -111,6 +109,7 @@ const Game = () => {
                 type="text"
                 maxLength="1"
                 value={letter}
+                readOnly
                 ref={(el) => (inputRefs.current[wordIndex][letterIndex] = el)}
                 onChange={(e) =>
                   handleInputChange(wordIndex, letterIndex, e.target.value)
@@ -124,6 +123,9 @@ const Game = () => {
                 }}
               />
             ))}
+          </div>
+          <div>
+            <WordDisplay word={jumbledWords[wordIndex]} />
           </div>
         </div>
       ))}

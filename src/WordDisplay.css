@@ -1,0 +1,17 @@
+.word-display {
+    display: flex;
+    gap: 5px; /* Adjust spacing between boxes as needed */
+  }
+  
+  .letter-box {
+    width: 40px; /* Adjust box size as needed */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: brown; /* Brown color for the box */
+    color: white; /* White text color */
+    font-size: 18px; /* Adjust font size as needed */
+    border-radius: 5px; /* Optional: rounded corners */
+  }
+  
