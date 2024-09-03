@@ -12,6 +12,14 @@ const Game = () => {
   const inputRefs = useRef(words.map((word) => Array(word.length).fill(null)));
   const [wordIdx, setWordIdx] = useState();
   const [letterIdx, setLetterIdx] = useState();
+  const initialLastFilledIndexMap = {};
+  words.forEach((word, index) => {
+    initialLastFilledIndexMap[index] = -1;
+  });
+
+  const [lastFilledIndexMap, setLastFilledIndexMap] = useState(
+    initialLastFilledIndexMap
+  );
 
   const jumbleWord = (word) => {
     return word
@@ -19,6 +27,7 @@ const Game = () => {
       .sort(() => Math.random() - 0.5)
       .join("");
   };
+
   function setIndexes(wordIndex, letterIndex) {
     setWordIdx(wordIndex);
     setLetterIdx(letterIndex);
@@ -31,17 +40,22 @@ const Game = () => {
 
   function handleCustomInput(value, wordIndex) {
     if (wordIdx === undefined || letterIdx === undefined) {
-      setWordIdx(wordIndex);
-      setLetterIdx(0);
-      handleInputChange(wordIndex, 0, value);
-    } else {
-      if (wordIdx === wordIndex) {
-        handleInputChange(wordIdx, letterIdx, value);
-      } else {
+        setWordIdx(wordIndex);
+        setLetterIdx(0);
         handleInputChange(wordIndex, 0, value);
-      }
+    } else {
+        if (wordIdx === wordIndex) {
+            handleInputChange(wordIdx, letterIdx, value);
+        } else {
+            const lastFilledIndex = lastFilledIndexMap[wordIdx] ?? -1; 
+            const newLetterIndex = lastFilledIndex + 1;
+            setWordIdx(wordIndex);
+            setLetterIdx(newLetterIndex);
+            handleInputChange(wordIndex, newLetterIndex, value);
+        }
     }
-  }
+}
+
 
   const handleInputChange = (wordIndex, letterIndex, value) => {
     let updatedGuesses = [...guesses];
@@ -72,6 +86,10 @@ const Game = () => {
     });
 
     setColors(updatedColors);
+    setLastFilledIndexMap(prevMap => ({
+      ...prevMap,
+      [wordIndex]: letterIndex,
+  }));
 
     if (value) {
       // Move to the next input box if the current one is filled
