@@ -25,17 +25,21 @@ const Game = () => {
   }
 
   useEffect(() => {
-    // Generate jumbled words for the current level once
     setJumbledWords(words.map((word) => jumbleWord(word)));
-    // Reset colors to white when changing levels
     setColors(words.map((word) => Array(word.length).fill("white")));
   }, [level]);
 
   function handleCustomInput(value, wordIndex) {
-    if(wordIdx===wordIndex){
-      handleInputChange(wordIdx, letterIdx, value);
-    }else{
-      console.log("only same letters Can be used");
+    if (wordIdx === undefined || letterIdx === undefined) {
+      setWordIdx(wordIndex);
+      setLetterIdx(0);
+      handleInputChange(wordIndex, 0, value);
+    } else {
+      if (wordIdx === wordIndex) {
+        handleInputChange(wordIdx, letterIdx, value);
+      } else {
+        console.log("Only same letters can be used");
+      }
     }
   }
 
@@ -138,7 +142,7 @@ const Game = () => {
           <div>
             <WordDisplay
               word={jumbledWords[wordIndex]}
-              wordIndex = {wordIndex}
+              wordIndex={wordIndex}
               onKeyPress={handleCustomInput}
             />
           </div>
