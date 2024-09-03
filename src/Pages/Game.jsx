@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { GameContext } from "./context/context";
-import WordDisplay from "./components/WordDisplay";
+import { GameContext } from "../context/context";
+import WordDisplay from "../components/WordDisplay";
 import "./Game.css";
 
 const Game = () => {

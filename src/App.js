@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Game from './Game';
+import Game from './Pages/Game';
 import { GameProvider } from './context/context';
 
 const App = () => (
