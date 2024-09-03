@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { GameContext } from "./context";
 import WordDisplay from "./WordDisplay";
+import "./Game.css";
 
 const Game = () => {
   const { level, words, guesses, setGuesses, checkWord, isGameComplete } =
@@ -40,26 +41,25 @@ const Game = () => {
 
   function handleCustomInput(value, wordIndex) {
     if (wordIdx === undefined || letterIdx === undefined) {
-        setWordIdx(wordIndex);
-        setLetterIdx(0);
-        handleInputChange(wordIndex, 0, value);
+      setWordIdx(wordIndex);
+      setLetterIdx(0);
+      handleInputChange(wordIndex, 0, value);
     } else {
-        if (wordIdx === wordIndex) {
-            handleInputChange(wordIdx, letterIdx, value);
-        } else {
-            const lastFilledIndex = lastFilledIndexMap[wordIndex] ?? -1; 
-            if(lastFilledIndex === words[wordIndex].length){
-              console.log("Word Completed!!");
-              return;
-            }
-            const newLetterIndex = lastFilledIndex + 1;
-            setWordIdx(wordIndex);
-            setLetterIdx(newLetterIndex);
-            handleInputChange(wordIndex, newLetterIndex, value);
+      if (wordIdx === wordIndex) {
+        handleInputChange(wordIdx, letterIdx, value);
+      } else {
+        const lastFilledIndex = lastFilledIndexMap[wordIndex] ?? -1;
+        if (lastFilledIndex === words[wordIndex].length) {
+          console.log("Word Completed!!");
+          return;
         }
+        const newLetterIndex = lastFilledIndex + 1;
+        setWordIdx(wordIndex);
+        setLetterIdx(newLetterIndex);
+        handleInputChange(wordIndex, newLetterIndex, value);
+      }
     }
-}
-
+  }
 
   const handleInputChange = (wordIndex, letterIndex, value) => {
     let updatedGuesses = [...guesses];
@@ -90,10 +90,10 @@ const Game = () => {
     });
 
     setColors(updatedColors);
-    setLastFilledIndexMap(prevMap => ({
+    setLastFilledIndexMap((prevMap) => ({
       ...prevMap,
-      [wordIndex]: letterIndex+1,
-  }));
+      [wordIndex]: letterIndex + 1,
+    }));
 
     if (value) {
       // Move to the next input box if the current one is filled
@@ -138,39 +138,39 @@ const Game = () => {
   }, [guesses]);
 
   return (
-    <div>
-      <h2>Level {level}</h2>
-      {guesses.map((currentGuess, wordIndex) => (
-        <div key={wordIndex} style={{ marginBottom: "20px" }}>
-          <div style={{ marginTop: "10px" }}>
-            {currentGuess.map((letter, letterIndex) => (
-              <input
-                key={letterIndex}
-                type="text"
-                maxLength="1"
-                value={letter}
-                ref={(el) => (inputRefs.current[wordIndex][letterIndex] = el)}
-                onFocus={() => setIndexes(wordIndex, letterIndex)}
-                style={{
-                  backgroundColor: colors[wordIndex][letterIndex],
-                  width: "30px",
-                  height: "30px",
-                  textAlign: "center",
-                  margin: "0 2px",
-                }}
-              />
-            ))}
-          </div>
-          <div>
+    <div className="G6_h5Game">
+      <div className="level-heading"><span>Level {level}</span></div>
+      <div className="level_word_container_G6">
+        {guesses.map((currentGuess, wordIndex) => (
+          <div key={wordIndex} className="guess-container">
+            <div className="guess-input-container">
+              {currentGuess.map((letter, letterIndex) => (
+                <input
+                  key={letterIndex}
+                  type="text"
+                  maxLength="1"
+                  value={letter}
+                  ref={(el) => (inputRefs.current[wordIndex][letterIndex] = el)}
+                  onFocus={() => setIndexes(wordIndex, letterIndex)}
+                  className="guess-input"
+                  style={{ backgroundColor: colors[wordIndex][letterIndex] }}
+                />
+              ))}
+            </div>
+
             <WordDisplay
               word={jumbledWords[wordIndex]}
               wordIndex={wordIndex}
               onKeyPress={handleCustomInput}
             />
           </div>
-        </div>
-      ))}
-      {isGameComplete && <p>Congratulations! You've completed the game!</p>}
+        ))}
+      </div>
+      {isGameComplete && (
+        <p className="game-complete-message">
+          Congratulations! You've completed the game!
+        </p>
+      )}
     </div>
   );
 };
