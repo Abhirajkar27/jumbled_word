@@ -4,26 +4,29 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 10vh;
+  height: 100%;
+  width: 100%;
 }
 
 .level-heading {
-  width: 8.8125rem;
+  width: 40vw;
   height: 2.375rem;
+  height: 4.8vh;
   flex-shrink: 0;
   border-radius: 2.8125rem;
   background: rgba(0, 0, 0, 0.23);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8vh;
+  margin: 8vh;
 }
 
 .level-heading span {
   color: #ffc700;
   text-align: center;
   font-family: "Pilat Extended";
-  font-size: 1.25rem;
+  /* font-size: 1.25rem; */
+  font-size: 2.5vh;
   font-style: normal;
   font-weight: 700;
   line-height: 123%;
@@ -36,6 +39,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 4vh;
+  margin-bottom: 20%;
 }
 
 .guess-container {
@@ -47,14 +51,14 @@
 }
 
 .guess-input-container {
-  margin-top: 10px;
+  margin-top: 5%;
 }
 
 .guess-input {
-  width: 30px;
-  height: 30px;
+  width: 8vw;
+  height: 8vw;
   text-align: center;
-  margin: 0 2px;
+  margin: 0 .5vw;
 }
 
 .game-complete-message {
