@@ -85,8 +85,8 @@
 }
 .gi_found_g6 {
   border-radius: 0.3125rem;
-  background: #ff910e;
-  box-shadow: 0px -3px 0px 0px #d87500 inset;
+  background: var(--Info-Information-Info-Light, #8397ff);
+  box-shadow: 0px -4.43px 0px 0px #5064c8 inset;
 }
 
 .game-complete-message {

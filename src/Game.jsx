@@ -89,7 +89,7 @@ const Game = () => {
       ) {
         const guessedWord = currentGuess.join("");
         if (checkWord(guessedWord, idx)) {
-          updatedColors[idx] = Array(currentGuess.length).fill("#FF910E");
+          updatedColors[idx] = Array(currentGuess.length).fill("#8397ff");
         } else {
           updatedColors[idx] = currentGuess.map((letter, i) =>
             guessedWord[i] === words[idx][i] ? "#00D864" : "#384353"
@@ -137,7 +137,7 @@ const Game = () => {
         const guessedWord = currentGuess.join("");
         if (checkWord(guessedWord, wordIndex)) {
           let updatedColors = [...colors];
-          updatedColors[wordIndex] = Array(currentGuess.length).fill("#FF910E");
+          updatedColors[wordIndex] = Array(currentGuess.length).fill("#8397ff");
           setColors(updatedColors);
         } else {
           let updatedColors = [...colors];
@@ -156,7 +156,7 @@ const Game = () => {
     switch (color) {
       case "#384353":
         return "gi_normal_g6";
-      case "#FF910E":
+      case "#8397ff":
         return "gi_found_g6";
       case "#00D864":
         return "gi_correct_g6";
