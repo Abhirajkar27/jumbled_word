@@ -62,7 +62,7 @@ const Game = () => {
         handleInputChange(wordIdx, letterIdx, value);
       } else {
         const lastFilledIndex = lastFilledIndexMap[wordIndex] ?? -1;
-        if (lastFilledIndex === words[wordIndex].length-1) {
+        if (lastFilledIndex === words[wordIndex].length - 1) {
           console.log("Word Completed!!");
           return;
         }
@@ -142,13 +142,28 @@ const Game = () => {
         } else {
           let updatedColors = [...colors];
           updatedColors[wordIndex] = currentGuess.map((letter, index) =>
-            guessedWord[index] === words[wordIndex][index] ? "#00D864" : "#384353"
+            guessedWord[index] === words[wordIndex][index]
+              ? "#00D864"
+              : "#384353"
           );
           setColors(updatedColors);
         }
       }
     });
   }, [guesses]);
+
+  const getClassNameFromColor = (color) => {
+    switch (color) {
+      case "#384353":
+        return "gi_normal_g6";
+      case "#FF910E":
+        return "gi_found_g6";
+      case "#00D864":
+        return "gi_correct_g6";
+      default:
+        return "";
+    }
+  };
 
   return (
     <div className="G6_h5Game">
@@ -167,8 +182,9 @@ const Game = () => {
                   value={letter}
                   ref={(el) => (inputRefs.current[wordIndex][letterIndex] = el)}
                   onFocus={() => setIndexes(wordIndex, letterIndex)}
-                  className="guess-input"
-                  style={{ backgroundColor: colors[wordIndex][letterIndex] }}
+                  className={`guess-input ${getClassNameFromColor(
+                    colors[wordIndex][letterIndex]
+                  )}`}
                 />
               ))}
             </div>
