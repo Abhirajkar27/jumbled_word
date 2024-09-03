@@ -10,6 +10,8 @@ const Game = () => {
   );
   const [jumbledWords, setJumbledWords] = useState([]);
   const inputRefs = useRef(words.map((word) => Array(word.length).fill(null)));
+  const [wordIdx, setWordIdx] = useState();
+  const [letterIdx, setLetterIdx] = useState();
 
   const jumbleWord = (word) => {
     return word
@@ -17,6 +19,10 @@ const Game = () => {
       .sort(() => Math.random() - 0.5)
       .join("");
   };
+  function setIndexes(wordIndex, letterIndex) {
+    setWordIdx(wordIndex);
+    setLetterIdx(letterIndex);
+  }
 
   useEffect(() => {
     // Generate jumbled words for the current level once
@@ -24,6 +30,14 @@ const Game = () => {
     // Reset colors to white when changing levels
     setColors(words.map((word) => Array(word.length).fill("white")));
   }, [level]);
+
+  function handleCustomInput(value, wordIndex) {
+    if(wordIdx===wordIndex){
+      handleInputChange(wordIdx, letterIdx, value);
+    }else{
+      console.log("only same letters Can be used");
+    }
+  }
 
   const handleInputChange = (wordIndex, letterIndex, value) => {
     let updatedGuesses = [...guesses];
@@ -109,11 +123,8 @@ const Game = () => {
                 type="text"
                 maxLength="1"
                 value={letter}
-                readOnly
                 ref={(el) => (inputRefs.current[wordIndex][letterIndex] = el)}
-                onChange={(e) =>
-                  handleInputChange(wordIndex, letterIndex, e.target.value)
-                }
+                onFocus={() => setIndexes(wordIndex, letterIndex)}
                 style={{
                   backgroundColor: colors[wordIndex][letterIndex],
                   width: "30px",
@@ -125,7 +136,11 @@ const Game = () => {
             ))}
           </div>
           <div>
-            <WordDisplay word={jumbledWords[wordIndex]} />
+            <WordDisplay
+              word={jumbledWords[wordIndex]}
+              wordIndex = {wordIndex}
+              onKeyPress={handleCustomInput}
+            />
           </div>
         </div>
       ))}
