@@ -14,7 +14,7 @@ const WordDisplay = ({ word , onKeyPress, wordIndex}) => {
           onClick={() => handleKeyClick(letter, wordIndex)}
           className="letter-box"
         >
-          {letter}
+          <span>{letter}</span>
         </div>
       ))}
     </div>
