@@ -34,9 +34,22 @@ const Game = () => {
     setLetterIdx(letterIndex);
   }
 
+  function resetLastFilledIndexMap() {
+    const resetMap = {};
+    words.forEach((_, index) => {
+      resetMap[index] = -1;
+    });
+    setLastFilledIndexMap(resetMap);
+  }
+
   useEffect(() => {
     setJumbledWords(words.map((word) => jumbleWord(word)));
     setColors(words.map((word) => Array(word.length).fill("white")));
+    setWordIdx();
+    setLetterIdx();
+    setTimeout(() => {
+      resetLastFilledIndexMap();
+    }, 100);
   }, [level]);
 
   function handleCustomInput(value, wordIndex) {
@@ -49,7 +62,7 @@ const Game = () => {
         handleInputChange(wordIdx, letterIdx, value);
       } else {
         const lastFilledIndex = lastFilledIndexMap[wordIndex] ?? -1;
-        if (lastFilledIndex === words[wordIndex].length) {
+        if (lastFilledIndex === words[wordIndex].length-1) {
           console.log("Word Completed!!");
           return;
         }
@@ -92,7 +105,7 @@ const Game = () => {
     setColors(updatedColors);
     setLastFilledIndexMap((prevMap) => ({
       ...prevMap,
-      [wordIndex]: letterIndex + 1,
+      [wordIndex]: letterIndex,
     }));
 
     if (value) {
@@ -139,7 +152,9 @@ const Game = () => {
 
   return (
     <div className="G6_h5Game">
-      <div className="level-heading"><span>Level {level}</span></div>
+      <div className="level-heading">
+        <span>Level {level}</span>
+      </div>
       <div className="level_word_container_G6">
         {guesses.map((currentGuess, wordIndex) => (
           <div key={wordIndex} className="guess-container">
