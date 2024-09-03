@@ -38,7 +38,7 @@ const Game = () => {
       if (wordIdx === wordIndex) {
         handleInputChange(wordIdx, letterIdx, value);
       } else {
-        console.log("Only same letters can be used");
+        handleInputChange(wordIndex, 0, value);
       }
     }
   }
