@@ -47,7 +47,11 @@ const Game = () => {
         if (wordIdx === wordIndex) {
             handleInputChange(wordIdx, letterIdx, value);
         } else {
-            const lastFilledIndex = lastFilledIndexMap[wordIdx] ?? -1; 
+            const lastFilledIndex = lastFilledIndexMap[wordIndex] ?? -1; 
+            if(lastFilledIndex === words[wordIndex].length){
+              console.log("Word Completed!!");
+              return;
+            }
             const newLetterIndex = lastFilledIndex + 1;
             setWordIdx(wordIndex);
             setLetterIdx(newLetterIndex);
@@ -88,7 +92,7 @@ const Game = () => {
     setColors(updatedColors);
     setLastFilledIndexMap(prevMap => ({
       ...prevMap,
-      [wordIndex]: letterIndex,
+      [wordIndex]: letterIndex+1,
   }));
 
     if (value) {
