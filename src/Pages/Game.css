@@ -7,6 +7,12 @@
   height: 100%;
   width: 100%;
 }
+.upperInfo_g6_container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4vw;
+}
 
 .level-heading {
   width: 40vw;
@@ -18,8 +24,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8vh;
+  margin: 8vh auto;
 }
+
 
 .level-heading span {
   color: #ffc700;

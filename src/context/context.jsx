@@ -4,6 +4,7 @@ export const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
   const [level, setLevel] = useState(1);
+  const [score, setScore] = useState(0);
   const [guesses, setGuesses] = useState([]);
   const [isGameComplete, setIsGameComplete] = useState(false);
 
@@ -16,7 +17,9 @@ export const GameProvider = ({ children }) => {
 
   // Initialize guesses for the current level
   const initializeGuesses = () => {
-    setGuesses(wordsPerLevel[level - 1].map((word) => Array(word.length).fill("")));
+    setGuesses(
+      wordsPerLevel[level - 1].map((word) => Array(word.length).fill(""))
+    );
   };
 
   const checkWord = (word, wordIndex) => {
@@ -32,8 +35,20 @@ export const GameProvider = ({ children }) => {
       setIsGameComplete(true);
     }
   };
+  const checkScore = () => {
+    let score=0;
+    let i=0;
+    guesses.forEach((guess)=>{
+      if(guess.join("") === wordsPerLevel[level - 1][i]){
+        score+= wordsPerLevel[level - 1][i].length*100;
+        i++;
+      }
+    })
+    setScore(score);
+  };
 
   const isLevelComplete = () => {
+    checkScore();
     return guesses.every((guess, index) => checkWord(guess.join(""), index));
   };
 
@@ -62,6 +77,8 @@ export const GameProvider = ({ children }) => {
         checkWord,
         moveToNextLevel,
         isGameComplete,
+        score,
+        setScore,
       }}
     >
       {children}

@@ -4,8 +4,15 @@ import WordDisplay from "../components/WordDisplay";
 import "./Game.css";
 
 const Game = () => {
-  const { level, words, guesses, setGuesses, checkWord, isGameComplete } =
-    useContext(GameContext);
+  const {
+    level,
+    words,
+    guesses,
+    setGuesses,
+    checkWord,
+    isGameComplete,
+    score,
+  } = useContext(GameContext);
   const [colors, setColors] = useState(
     words.map((word) => Array(word.length).fill("#384353"))
   );
@@ -13,9 +20,7 @@ const Game = () => {
   const inputRefs = useRef(words.map((word) => Array(word.length).fill(null)));
   const [wordIdx, setWordIdx] = useState();
   const [letterIdx, setLetterIdx] = useState();
-  const [lockedWords, setLockedWords] = useState(
-    words.map(() => false) 
-  );
+  const [lockedWords, setLockedWords] = useState(words.map(() => false));
 
   const initialLastFilledIndexMap = {};
   words.forEach((word, index) => {
@@ -129,7 +134,7 @@ const Game = () => {
       ) {
         const guessedWord = currentGuess.join("");
         if (checkWord(guessedWord, idx)) {
-          updatedColors[idx] = Array(currentGuess.length).fill("#8397ff");
+          updatedColors[idx] = Array(currentGuess.length).fill("#8397ff"); 
           setLockedWords((prevLockedWords) => {
             const newLockedWords = [...prevLockedWords];
             newLockedWords[idx] = true;
@@ -221,7 +226,6 @@ const Game = () => {
               newGuesses[wordIndex] = Array(words[wordIndex].length).fill("");
               return newGuesses;
             });
-            // console.log("doing This", wordIndex);
             setLastFilledIndexMap((prevMap) => ({
               ...prevMap,
               [wordIndex]: -1,
@@ -247,8 +251,13 @@ const Game = () => {
 
   return (
     <div className="G6_h5Game">
-      <div className="level-heading">
-        <span>Level {level}</span>
+      <div className="upperInfo_g6_container">
+        <div className="level-heading">
+          <span>Level: {level}</span>
+        </div>
+        <div className="level-heading">
+          <span>Score: {score}</span>
+        </div>
       </div>
       <div className="level_word_container_G6">
         {guesses.map((currentGuess, wordIndex) => (
